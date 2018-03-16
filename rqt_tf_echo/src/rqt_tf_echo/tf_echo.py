@@ -10,7 +10,7 @@ from qt_gui.plugin import Plugin
 from python_qt_binding import QtCore
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import QTimer, Signal
-from python_qt_binding.QtWidgets import QLabel, QLineEdit, QWidget
+from python_qt_binding.QtWidgets import QAction, QLabel, QLineEdit, QMenu, QWidget
 from std_msgs.msg import String
 import tf2_py as tf2
 import tf2_ros
@@ -84,9 +84,21 @@ class TfEcho(Plugin):
         self.source_line_edit = self._widget.findChild(QLineEdit, 'source_line_edit')
         self.target_line_edit = self._widget.findChild(QLineEdit, 'target_line_edit')
 
+        self._widget.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
+        action = QAction("Show/hide Quaternion", self._widget)
+        action.triggered.connect(self.hide_quaternion)
+        self._widget.addAction(action)
+
         self.qt_timer = QTimer()
         self.qt_timer.start(100)
         self.qt_timer.timeout.connect(self.qt_update)
+
+    def hide_quaternion(self):
+        for axis in ['x', 'y', 'z', 'w']:
+            if self.label['quat_' + axis].isHidden():
+                self.label['quat_' + axis].show()
+            else:
+                self.label['quat_' + axis].hide()
 
     def qt_update(self):
         lookup_time = rospy.Time()
