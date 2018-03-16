@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>336</width>
-    <height>204</height>
+    <height>216</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,6 +42,18 @@
      </property>
      <item>
       <layout class="QGridLayout" name="grid_layout_2">
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
+        <number>1</number>
+       </property>
        <item row="2" column="0">
         <widget class="QLineEdit" name="source_line_edit">
          <property name="toolTip">
@@ -54,8 +66,14 @@
          <property name="toolTip">
           <string>Time when the lookup was made</string>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
+         </property>
+         <property name="margin">
+          <number>1</number>
          </property>
         </widget>
        </item>
@@ -64,8 +82,14 @@
          <property name="toolTip">
           <string>Time of the transform</string>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
+         </property>
+         <property name="margin">
+          <number>1</number>
          </property>
         </widget>
        </item>
@@ -97,6 +121,9 @@
          <property name="toolTip">
           <string>Translation y</string>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -107,6 +134,9 @@
          <property name="toolTip">
           <string>Quaternion y</string>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -114,6 +144,9 @@
        </item>
        <item row="3" column="1">
         <widget class="QLabel" name="rot_pitch_rad_label">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -124,6 +157,9 @@
          <property name="toolTip">
           <string>Translation z</string>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -131,6 +167,9 @@
        </item>
        <item row="3" column="2">
         <widget class="QLabel" name="rot_yaw_rad_label">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -140,6 +179,9 @@
         <widget class="QLabel" name="trans_x_label">
          <property name="toolTip">
           <string>Translation x</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="text">
           <string/>
@@ -151,6 +193,9 @@
          <property name="toolTip">
           <string>Quaternion x</string>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -160,6 +205,9 @@
         <widget class="QLabel" name="quat_z_label">
          <property name="toolTip">
           <string>Quaternion z</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="text">
           <string/>
@@ -171,6 +219,9 @@
          <property name="toolTip">
           <string>Quaternion w</string>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -178,6 +229,9 @@
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="rot_roll_rad_label">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -185,6 +239,9 @@
        </item>
        <item row="4" column="0">
         <widget class="QLabel" name="rot_roll_deg_label">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -192,6 +249,9 @@
        </item>
        <item row="4" column="1">
         <widget class="QLabel" name="rot_pitch_deg_label">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -199,6 +259,9 @@
        </item>
        <item row="4" column="2">
         <widget class="QLabel" name="rot_yaw_deg_label">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
