@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- TODO(lucasw) publish a couple of transforms -->
+	<!--node name="pub_strings" pkg="rqt_tf_echo" type="pub_strings.py"
+			output="screen" /-->
+
+  <node name="rqt_generic" pkg="rqt_gui" type="rqt_gui"
+      args="--perspective-file $(find rqt_tf_echo)/config/tf_echo.perspective"
+      output="screen"
+      if="true">
+  </node>
+
+</launch>

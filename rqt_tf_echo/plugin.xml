@@ -1,0 +1,20 @@
+<library path="src">
+  <class name="Tf Echo" type="rqt_tf_echo.tf_echo.TfEcho" base_class_type="rqt_gui_py::Plugin">
+    <description>
+      Show transform between two frames
+    </description>
+    <qtgui>
+      <group>
+        <label>Topics</label>
+      </group>
+      <!-- optional grouping...
+      <group>
+        <label>Subgroup</label>
+      </group>
+      -->
+      <label>Tf Echo</label>
+      <icon type="theme">system-help</icon>
+      <statustip>Show transfrom between two frames</statustip>
+    </qtgui>
+  </class>
+</library>
