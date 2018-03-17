@@ -86,37 +86,40 @@ class TfEcho(Plugin):
         self.label['target'] = self._widget.findChild(QLineEdit, 'target_line_edit')
 
         self._widget.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
-        action = QAction("Show/hide transform time", self._widget)
-        action.triggered.connect(partial(self.toggle_labels, ["transform_time"]))
-        self._widget.addAction(action)
-        action = QAction("Show/hide current time", self._widget)
-        action.triggered.connect(partial(self.toggle_labels, ["current_time"]))
-        self._widget.addAction(action)
-        action = QAction("Show/hide source frame", self._widget)
-        action.triggered.connect(partial(self.toggle_labels, ["source"]))
-        self._widget.addAction(action)
-        action = QAction("Show/hide target frame", self._widget)
-        action.triggered.connect(partial(self.toggle_labels, ["target"]))
-        self._widget.addAction(action)
-        action = QAction("Show/hide translation", self._widget)
-        action.triggered.connect(partial(self.toggle_labels, ["trans_x", "trans_y", "trans_z"]))
-        self._widget.addAction(action)
-        action = QAction("Show/hide quaternion", self._widget)
-        action.triggered.connect(partial(self.toggle_labels, ["quat_x", "quat_y",
-                                                              "quat_z", "quat_w"]))
-        self._widget.addAction(action)
-        action = QAction("Show/hide rotation radians", self._widget)
-        action.triggered.connect(partial(self.toggle_labels, ["rot_roll_rad", "rot_pitch_rad",
-                                                              "rot_yaw_rad"]))
-        self._widget.addAction(action)
-        action = QAction("Show/hide rotation degrees", self._widget)
-        action.triggered.connect(partial(self.toggle_labels, ["rot_roll_deg", "rot_pitch_deg",
-                                                              "rot_yaw_deg"]))
-        self._widget.addAction(action)
+        self.actions = {}
+        self.setup_menu()
 
         self.qt_timer = QTimer()
         self.qt_timer.start(100)
         self.qt_timer.timeout.connect(self.qt_update)
+
+    def add_menu_item(self, menu_name, labels):
+        menu_text = menu_name
+        if self.label[labels[0]].isHidden():
+            menu_text = "Show " + menu_text
+        else:
+            menu_text = "Hide " + menu_text
+
+        action = QAction(menu_text, self._widget)
+        action.triggered.connect(partial(self.toggle_labels, labels))
+        self._widget.addAction(action)
+
+        self.actions[menu_name] = action
+
+    def setup_menu(self):
+        for key in self.actions.keys():
+            self._widget.removeAction(self.actions[key])
+
+        self.add_menu_item("transform time", ["transform_time"])
+        self.add_menu_item("current time", ["current_time"])
+        self.add_menu_item("source/parent frame", ["source"])
+        self.add_menu_item("target/child frame", ["target"])
+        self.add_menu_item("translation", ["trans_x", "trans_y", "trans_z"])
+        self.add_menu_item("rotation quaternion", ["quat_x", "quat_y", "quat_z", "quat_w"])
+        self.add_menu_item("rotation (radians)",
+                           ["rot_roll_rad", "rot_pitch_rad", "rot_yaw_rad"])
+        self.add_menu_item("rotation (degrees)",
+                           ["rot_roll_deg", "rot_pitch_deg", "rot_yaw_deg"])
 
     def toggle(self, name):
         if self.label[name].isHidden():
@@ -127,6 +130,7 @@ class TfEcho(Plugin):
     def toggle_labels(self, labels):
         for label in labels:
             self.toggle(label)
+        self.setup_menu()
 
     def qt_update(self):
         lookup_time = rospy.Time()
