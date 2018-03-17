@@ -191,21 +191,22 @@ class TfEcho(Plugin):
             self.target_frame = instance_settings.value('target_frame')
             self.label['target'].setText(self.target_frame)
 
-        if False:
-        # for key in self.label.keys():
-            if instance_settings.contains(key + '_hidden'):
-                if instance_settings.value(key + '_hidden'):
+        for key in self.label.keys():
+            name = key + '_hidden'
+            if instance_settings.contains(name):
+                if instance_settings.value(name) == str(True):
                     self.label[key].hide()
 
     def save_settings(self, plugin_settings, instance_settings):
         instance_settings.set_value('source_frame', self.source_frame)
         instance_settings.set_value('target_frame', self.target_frame)
 
-        if False:
-        # for key in self.label.keys():
-            instance_settings.set_value(key + '_hidden', self.label[key].isHidden())
+        for key in self.label.keys():
+            is_hidden = self.label[key].isHidden()
+            name = key + '_hidden'
+            instance_settings.set_value(name, str(is_hidden))
 
-    #def trigger_configuration(self):
+    # def trigger_configuration(self):
         # Comment in to signal that the plugin has a way to configure
         # This will enable a setting button (gear icon) in each dock widget title bar
         # Usually used to open a modal configuration dialog
