@@ -6,6 +6,7 @@ import os
 import rospkg
 import rospy
 
+from functools import partial
 from qt_gui.plugin import Plugin
 from python_qt_binding import QtCore
 from python_qt_binding import loadUi
@@ -81,31 +82,58 @@ class TfEcho(Plugin):
             for axis in ['roll', 'pitch', 'yaw']:
                 name = 'rot_' + axis + '_' + unit
                 self.label[name] = self._widget.findChild(QLabel, name + '_label')
-        self.source_line_edit = self._widget.findChild(QLineEdit, 'source_line_edit')
-        self.target_line_edit = self._widget.findChild(QLineEdit, 'target_line_edit')
+        self.label['source'] = self._widget.findChild(QLineEdit, 'source_line_edit')
+        self.label['target'] = self._widget.findChild(QLineEdit, 'target_line_edit')
 
         self._widget.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
-        action = QAction("Show/hide Quaternion", self._widget)
-        action.triggered.connect(self.hide_quaternion)
+        action = QAction("Show/hide transform time", self._widget)
+        action.triggered.connect(partial(self.toggle_labels, ["transform_time"]))
+        self._widget.addAction(action)
+        action = QAction("Show/hide current time", self._widget)
+        action.triggered.connect(partial(self.toggle_labels, ["current_time"]))
+        self._widget.addAction(action)
+        action = QAction("Show/hide source frame", self._widget)
+        action.triggered.connect(partial(self.toggle_labels, ["source"]))
+        self._widget.addAction(action)
+        action = QAction("Show/hide target frame", self._widget)
+        action.triggered.connect(partial(self.toggle_labels, ["target"]))
+        self._widget.addAction(action)
+        action = QAction("Show/hide translation", self._widget)
+        action.triggered.connect(partial(self.toggle_labels, ["trans_x", "trans_y", "trans_z"]))
+        self._widget.addAction(action)
+        action = QAction("Show/hide quaternion", self._widget)
+        action.triggered.connect(partial(self.toggle_labels, ["quat_x", "quat_y",
+                                                              "quat_z", "quat_w"]))
+        self._widget.addAction(action)
+        action = QAction("Show/hide rotation radians", self._widget)
+        action.triggered.connect(partial(self.toggle_labels, ["rot_roll_rad", "rot_pitch_rad",
+                                                              "rot_yaw_rad"]))
+        self._widget.addAction(action)
+        action = QAction("Show/hide rotation degrees", self._widget)
+        action.triggered.connect(partial(self.toggle_labels, ["rot_roll_deg", "rot_pitch_deg",
+                                                              "rot_yaw_deg"]))
         self._widget.addAction(action)
 
         self.qt_timer = QTimer()
         self.qt_timer.start(100)
         self.qt_timer.timeout.connect(self.qt_update)
 
-    def hide_quaternion(self):
-        for axis in ['x', 'y', 'z', 'w']:
-            if self.label['quat_' + axis].isHidden():
-                self.label['quat_' + axis].show()
-            else:
-                self.label['quat_' + axis].hide()
+    def toggle(self, name):
+        if self.label[name].isHidden():
+            self.label[name].show()
+        else:
+            self.label[name].hide()
+
+    def toggle_labels(self, labels):
+        for label in labels:
+            self.toggle(label)
 
     def qt_update(self):
         lookup_time = rospy.Time()
         cur_time = rospy.Time.now().to_sec()
 
-        self.source_frame = self.source_line_edit.text()
-        self.target_frame = self.target_line_edit.text()
+        self.source_frame = self.label['source'].text()
+        self.target_frame = self.label['target'].text()
 
         ts = None
         if self.source_frame != "" and self.target_frame != "":
@@ -154,14 +182,24 @@ class TfEcho(Plugin):
         # TODO(lucasw) make rosparam override saved settings
         if instance_settings.contains('source_frame'):
             self.source_frame = instance_settings.value('source_frame')
-            self.source_line_edit.setText(self.source_frame)
+            self.label['source'].setText(self.source_frame)
         if instance_settings.contains('target_frame'):
             self.target_frame = instance_settings.value('target_frame')
-            self.target_line_edit.setText(self.target_frame)
+            self.label['target'].setText(self.target_frame)
+
+        if False:
+        # for key in self.label.keys():
+            if instance_settings.contains(key + '_hidden'):
+                if instance_settings.value(key + '_hidden'):
+                    self.label[key].hide()
 
     def save_settings(self, plugin_settings, instance_settings):
         instance_settings.set_value('source_frame', self.source_frame)
         instance_settings.set_value('target_frame', self.target_frame)
+
+        if False:
+        # for key in self.label.keys():
+            instance_settings.set_value(key + '_hidden', self.label[key].isHidden())
 
     #def trigger_configuration(self):
         # Comment in to signal that the plugin has a way to configure

@@ -10,6 +10,7 @@
 
   <node name="rqt_generic" pkg="rqt_gui" type="rqt_gui"
       args="--perspective-file $(find rqt_tf_echo)/config/tf_echo.perspective"
+      required="true"
       output="screen">
   </node>
 
