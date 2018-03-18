@@ -76,12 +76,15 @@ class TfEcho(Plugin):
         self.label['transform_time'] = self._widget.findChild(QLabel, 'transform_time_label')
         for axis in ['x', 'y', 'z']:
             self.label['trans_' + axis] = self._widget.findChild(QLabel, 'trans_' + axis + '_label')
+            self.label['trans_' + axis + '_2'] = self._widget.findChild(QLabel, 'trans_' + axis + '_label_2')
         for axis in ['x', 'y', 'z', 'w']:
             self.label['quat_' + axis] = self._widget.findChild(QLabel, 'quat_' + axis + '_label')
+            self.label['quat_' + axis + '_2'] = self._widget.findChild(QLabel, 'quat_' + axis + '_label_2')
         for unit in ['rad', 'deg']:
             for axis in ['roll', 'pitch', 'yaw']:
                 name = 'rot_' + axis + '_' + unit
                 self.label[name] = self._widget.findChild(QLabel, name + '_label')
+                self.label[name + '_2'] = self._widget.findChild(QLabel, name + '_label_2')
         self.label['source'] = self._widget.findChild(QLineEdit, 'source_line_edit')
         self.label['target'] = self._widget.findChild(QLineEdit, 'target_line_edit')
 
@@ -124,8 +127,12 @@ class TfEcho(Plugin):
     def toggle(self, name):
         if self.label[name].isHidden():
             self.label[name].show()
+            if name + '_2' in self.label.keys():
+                self.label[name + '_2'].show()
         else:
             self.label[name].hide()
+            if name + '_2' in self.label.keys():
+                self.label[name + '_2'].hide()
 
     def toggle_labels(self, labels):
         for label in labels:
@@ -196,6 +203,7 @@ class TfEcho(Plugin):
             if instance_settings.contains(name):
                 if instance_settings.value(name) == str(True):
                     self.label[key].hide()
+        self.setup_menu()
 
     def save_settings(self, plugin_settings, instance_settings):
         instance_settings.set_value('source_frame', self.source_frame)

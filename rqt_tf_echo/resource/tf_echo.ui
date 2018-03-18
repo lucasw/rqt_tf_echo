@@ -117,7 +117,7 @@
         <number>1</number>
        </property>
        <item row="2" column="0">
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="quat_x_label_2">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -133,7 +133,7 @@
         </widget>
        </item>
        <item row="4" column="2">
-        <widget class="QLabel" name="label_8">
+        <widget class="QLabel" name="rot_pitch_deg_label_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -195,7 +195,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="trans_x_label_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -310,7 +310,7 @@
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="rot_roll_rad_label_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -323,7 +323,7 @@
         </widget>
        </item>
        <item row="2" column="2">
-        <widget class="QLabel" name="label_6">
+        <widget class="QLabel" name="quat_y_label_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -336,7 +336,7 @@
         </widget>
        </item>
        <item row="1" column="5">
-        <widget class="QLabel" name="label_9">
+        <widget class="QLabel" name="trans_z_label_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -349,7 +349,7 @@
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QLabel" name="label_4">
+        <widget class="QLabel" name="rot_roll_deg_label_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -362,7 +362,7 @@
         </widget>
        </item>
        <item row="3" column="2">
-        <widget class="QLabel" name="label_7">
+        <widget class="QLabel" name="rot_pitch_rad_label_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -375,7 +375,7 @@
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QLabel" name="label_5">
+        <widget class="QLabel" name="trans_y_label_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -388,7 +388,7 @@
         </widget>
        </item>
        <item row="2" column="5">
-        <widget class="QLabel" name="label_10">
+        <widget class="QLabel" name="quat_z_label_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -401,7 +401,7 @@
         </widget>
        </item>
        <item row="3" column="5">
-        <widget class="QLabel" name="label_11">
+        <widget class="QLabel" name="rot_yaw_rad_label_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -414,7 +414,7 @@
         </widget>
        </item>
        <item row="4" column="5">
-        <widget class="QLabel" name="label_12">
+        <widget class="QLabel" name="rot_yaw_deg_label_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -427,7 +427,7 @@
         </widget>
        </item>
        <item row="2" column="7">
-        <widget class="QLabel" name="label_13">
+        <widget class="QLabel" name="quat_w_label_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
