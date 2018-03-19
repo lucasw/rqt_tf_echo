@@ -36,7 +36,9 @@ class TfEcho(Plugin):
         # Process standalone plugin command-line arguments
         from argparse import ArgumentParser
         parser = ArgumentParser()
-        # Add argument(s) to the parser.
+        # TODO(lucasw) these aren't working
+        # parser.add_argument("source_frame", default='')  # parent
+        # parser.add_argument("target_frame", default='')  # child
         parser.add_argument("-q", "--quiet", action="store_true",
                       dest="quiet",
                       help="Put plugin in silent mode")
@@ -44,6 +46,11 @@ class TfEcho(Plugin):
         if not args.quiet:
             print 'arguments: ', args
             print 'unknowns: ', unknowns
+
+        self.source_frame = ''
+        self.target_frame = ''
+        # self.source_frame = self.args.source_frame
+        # self.target_frame = self.args.target_frame
 
         # Create QWidget
         self._widget = QWidget()
@@ -74,14 +81,14 @@ class TfEcho(Plugin):
         self.label = {}
         self.label['current_time'] = self._widget.findChild(QLabel, 'current_time_label')
         self.label['transform_time'] = self._widget.findChild(QLabel, 'transform_time_label')
-        for axis in ['x', 'y', 'z']:
+        for axis in ['x', 'y', 'z', 'label']:
             self.label['trans_' + axis] = self._widget.findChild(QLabel, 'trans_' + axis + '_label')
             self.label['trans_' + axis + '_2'] = self._widget.findChild(QLabel, 'trans_' + axis + '_label_2')
         for axis in ['x', 'y', 'z', 'w']:
             self.label['quat_' + axis] = self._widget.findChild(QLabel, 'quat_' + axis + '_label')
             self.label['quat_' + axis + '_2'] = self._widget.findChild(QLabel, 'quat_' + axis + '_label_2')
         for unit in ['rad', 'deg']:
-            for axis in ['roll', 'pitch', 'yaw']:
+            for axis in ['roll', 'pitch', 'yaw', 'label']:
                 name = 'rot_' + axis + '_' + unit
                 self.label[name] = self._widget.findChild(QLabel, name + '_label')
                 self.label[name + '_2'] = self._widget.findChild(QLabel, name + '_label_2')
@@ -117,12 +124,12 @@ class TfEcho(Plugin):
         self.add_menu_item("current time", ["current_time"])
         self.add_menu_item("source/parent frame", ["source"])
         self.add_menu_item("target/child frame", ["target"])
-        self.add_menu_item("translation", ["trans_x", "trans_y", "trans_z"])
+        self.add_menu_item("translation", ["trans_x", "trans_y", "trans_z", "trans_label"])
         self.add_menu_item("rotation quaternion", ["quat_x", "quat_y", "quat_z", "quat_w"])
         self.add_menu_item("rotation (radians)",
-                           ["rot_roll_rad", "rot_pitch_rad", "rot_yaw_rad"])
+                           ["rot_roll_rad", "rot_pitch_rad", "rot_yaw_rad", "rot_label_rad"])
         self.add_menu_item("rotation (degrees)",
-                           ["rot_roll_deg", "rot_pitch_deg", "rot_yaw_deg"])
+                           ["rot_roll_deg", "rot_pitch_deg", "rot_yaw_deg", "rot_label_deg"])
 
     def toggle(self, name):
         if self.label[name].isHidden():
@@ -189,14 +196,18 @@ class TfEcho(Plugin):
         # TODO unregister all publishers here
         pass
 
+    def get_param_setting(self, name, label_name, val):
+        if val == '':
+            val = rospy.get_param('~' + name, '')
+        # load from instance_settings only if args/params aren't set
+        if val == '' and instance_settings.contains(name):
+            val = instance_settings.value(name)
+        self.label[label_name].setText(val)
+        return val
+
     def restore_settings(self, plugin_settings, instance_settings):
-        # TODO(lucasw) make rosparam override saved settings
-        if instance_settings.contains('source_frame'):
-            self.source_frame = instance_settings.value('source_frame')
-            self.label['source'].setText(self.source_frame)
-        if instance_settings.contains('target_frame'):
-            self.target_frame = instance_settings.value('target_frame')
-            self.label['target'].setText(self.target_frame)
+        self.source_frame = self.get_param_setting("source_frame", "source", self.source_frame)
+        self.target_frame = self.get_param_setting("target_frame", "target", self.target_frame)
 
         for key in self.label.keys():
             name = key + '_hidden'
