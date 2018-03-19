@@ -196,7 +196,7 @@ class TfEcho(Plugin):
         # TODO unregister all publishers here
         pass
 
-    def get_param_setting(self, name, label_name, val):
+    def get_param_setting(self, name, label_name, val, instance_settings):
         if val == '':
             val = rospy.get_param('~' + name, '')
         # load from instance_settings only if args/params aren't set
@@ -206,8 +206,10 @@ class TfEcho(Plugin):
         return val
 
     def restore_settings(self, plugin_settings, instance_settings):
-        self.source_frame = self.get_param_setting("source_frame", "source", self.source_frame)
-        self.target_frame = self.get_param_setting("target_frame", "target", self.target_frame)
+        self.source_frame = self.get_param_setting("source_frame", "source",
+                                                   self.source_frame, instance_settings)
+        self.target_frame = self.get_param_setting("target_frame", "target",
+                                                   self.target_frame, instance_settings)
 
         for key in self.label.keys():
             name = key + '_hidden'
