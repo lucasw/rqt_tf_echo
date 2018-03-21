@@ -173,6 +173,8 @@ class TfEcho(Plugin):
         self.label['current_time'].setText("{:1.2f}".format(cur_time))
 
         if ts is None:
+            # TODO(lucasw) need a dedicated status label in case the user
+            # hides this?
             self.label['transform_time'].setStyleSheet('background-color: red')
             return
 
