@@ -6,11 +6,13 @@ project(rqt_tf_echo)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   message_generation
+  roslint
   rospy
   rqt_gui_py
   std_msgs
 )
 
+roslint_python()
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 

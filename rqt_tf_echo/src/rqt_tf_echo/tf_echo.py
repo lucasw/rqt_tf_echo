@@ -19,10 +19,12 @@ import tf2_ros
 from geometry_msgs.msg import TransformStamped
 from tf import transformations
 
+
 def _euler_from_quaternion_msg(quaternion):
     return transformations.euler_from_quaternion([quaternion.x, quaternion.y, quaternion.z, quaternion.w])
     # transform3d went from from xyzw to wxyz
     # return euler_from_quaternion([quaternion.w, quaternion.x, quaternion.y, quaternion.z])
+
 
 class TfEcho(Plugin):
     # do_update_label = QtCore.pyqtSignal(String)
@@ -40,8 +42,8 @@ class TfEcho(Plugin):
         # parser.add_argument("source_frame", default='')  # parent
         # parser.add_argument("target_frame", default='')  # child
         parser.add_argument("-q", "--quiet", action="store_true",
-                      dest="quiet",
-                      help="Put plugin in silent mode")
+                            dest="quiet",
+                            help="Put plugin in silent mode")
         args, unknowns = parser.parse_known_args(context.argv())
         if not args.quiet:
             print 'arguments: ', args
@@ -61,10 +63,10 @@ class TfEcho(Plugin):
         loadUi(ui_file, self._widget)
         # Give QObjects reasonable names
         self._widget.setObjectName('TfEchoUi')
-        # Show _widget.windowTitle on left-top of each plugin (when 
-        # it's set in _widget). This is useful when you open multiple 
-        # plugins at once. Also if you open multiple instances of your 
-        # plugin at once, these lines add number to make it easy to 
+        # Show _widget.windowTitle on left-top of each plugin (when
+        # it's set in _widget). This is useful when you open multiple
+        # plugins at once. Also if you open multiple instances of your
+        # plugin at once, these lines add number to make it easy to
         # tell from pane to pane.
         if context.serial_number() > 1:
             self._widget.setWindowTitle(self._widget.windowTitle() + (' (%d)' % context.serial_number()))
