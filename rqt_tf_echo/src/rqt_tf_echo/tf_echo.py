@@ -102,7 +102,7 @@ class TfEcho(Plugin):
         self.setup_menu()
 
         self.qt_timer = QTimer()
-        self.qt_timer.start(100)
+        self.qt_timer.start(150)
         self.qt_timer.timeout.connect(self.qt_update)
 
     def add_menu_item(self, menu_name, labels):
@@ -161,7 +161,7 @@ class TfEcho(Plugin):
                 ts = self.tf_buffer.lookup_transform(self.source_frame,
                                                      self.target_frame,
                                                      lookup_time,
-                                                     rospy.Duration(0.02))
+                                                     rospy.Duration(0.005))
             except tf2.LookupException as ex:
                 msg = "At time {}, (current time {}) ".format(lookup_time.to_sec(), cur_time)
                 rospy.logdebug(msg + str(ex))
