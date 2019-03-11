@@ -102,7 +102,7 @@ class TfEcho(Plugin):
         self.setup_menu()
 
         self.qt_timer = QTimer()
-        self.qt_timer.start(150)
+        self.qt_timer.start(200)
         self.qt_timer.timeout.connect(self.qt_update)
 
     def add_menu_item(self, menu_name, labels):
@@ -155,6 +155,9 @@ class TfEcho(Plugin):
         self.source_frame = self.label['source'].text()
         self.target_frame = self.label['target'].text()
 
+        # TODO(lucasw) add a text box that can be disabled,
+        # put any error messages into it.
+        msg = ''
         ts = None
         if self.source_frame != "" and self.target_frame != "":
             try:
@@ -162,11 +165,8 @@ class TfEcho(Plugin):
                                                      self.target_frame,
                                                      lookup_time,
                                                      rospy.Duration(0.005))
-            except tf2.LookupException as ex:
+            except tf2.TransformException as ex:
                 msg = "At time {}, (current time {}) ".format(lookup_time.to_sec(), cur_time)
-                rospy.logdebug(msg + str(ex))
-            except tf2.ExtrapolationException as ex:
-                msg = "(current time {}) ".format(cur_time)
                 rospy.logdebug(msg + str(ex))
         # update the cur time in case lookup_transform was slow
         cur_time = rospy.Time.now().to_sec()
@@ -175,8 +175,11 @@ class TfEcho(Plugin):
         if ts is None:
             # TODO(lucasw) need a dedicated status label in case the user
             # hides this?
-            self.label['transform_time'].setStyleSheet('background-color: red')
+            for label in ['source', 'target']:
+                self.label[label].setStyleSheet('background-color: yellow')
             return
+        for label in ['source', 'target']:
+            self.label[label].setStyleSheet('background-color: white')
 
         self.label['transform_time'].setStyleSheet('')
         self.label['transform_time'].setText("{:1.2f}".format(ts.header.stamp.to_sec()))

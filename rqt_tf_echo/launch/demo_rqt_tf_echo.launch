@@ -8,6 +8,11 @@
   <node pkg="tf2_ros" type="static_transform_publisher" name="static_frame2"
       args="0 0 -6.0 0.0 0.0 0.25 frame1 frame2" />
 
+  <node pkg="tf2_ros" type="static_transform_publisher" name="static_frame1_tree2"
+      args="1 5 5 0.1 0.2 0.3 tree2_map tree2_frame1" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="static_frame2_tree2"
+      args="0 0 -6.0 0.0 0.0 0.25 tree2_frame1 tree2_frame2" />
+
   <node name="rqt_generic" pkg="rqt_gui" type="rqt_gui"
       args="--perspective-file $(find rqt_tf_echo)/config/tf_echo.perspective"
       required="true"
