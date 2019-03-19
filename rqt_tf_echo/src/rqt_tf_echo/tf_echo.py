@@ -168,6 +168,9 @@ class TfEcho(Plugin):
             except tf2.TransformException as ex:
                 msg = "At time {}, (current time {}) ".format(lookup_time.to_sec(), cur_time)
                 rospy.logdebug(msg + str(ex))
+            except rospy.exceptions.ROSTimeMovedBackwardsException as ex:
+                msg = str(ex)
+                rospy.logdebug(str(ex))
         # update the cur time in case lookup_transform was slow
         cur_time = rospy.Time.now().to_sec()
         self.label['current_time'].setText("{:1.2f}".format(cur_time))
