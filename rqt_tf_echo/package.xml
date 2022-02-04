@@ -2,7 +2,7 @@
 <package>
   <name>rqt_tf_echo</name>
   <version>0.0.0</version>
-  <description>The rqt_tf_echo package</description>
+  <description>Display the rotation and translation between two frames in rqt panel</description>
 
   <maintainer email="wsacul@gmail.com">Lucas Walter</maintainer>
   <license>BSD</license>
@@ -15,8 +15,10 @@
   <build_depend>std_msgs</build_depend>
   <run_depend>message_runtime</run_depend>
   <run_depend>rospy</run_depend>
+  <run_depend>rqt_gui</run_depend>
   <run_depend>rqt_gui_py</run_depend>
   <run_depend>std_msgs</run_depend>
+  <run_depend>tf2_ros</run_depend>
 
   <export>
     <rqt_gui plugin="${prefix}/plugin.xml"/>

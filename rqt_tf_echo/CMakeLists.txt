@@ -83,7 +83,7 @@ catkin_python_setup()
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rqt_tf_echo
-#  CATKIN_DEPENDS rospy rqt_gui_py
+  CATKIN_DEPENDS rospy rqt_gui_py std_msgs
 #  DEPENDS system_lib
 )
 
@@ -125,7 +125,7 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 install(PROGRAMS
-  scripts/rqt_tf_echo
+  scripts/${PROJECT_NAME}
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
