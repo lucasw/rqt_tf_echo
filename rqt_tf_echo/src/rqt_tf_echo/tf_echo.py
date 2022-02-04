@@ -10,13 +10,11 @@ from functools import partial
 from qt_gui.plugin import Plugin
 from python_qt_binding import QtCore
 from python_qt_binding import loadUi
-from python_qt_binding.QtCore import QTimer, Signal
-from python_qt_binding.QtWidgets import QAction, QLabel, QLineEdit, QMenu, QWidget
-from std_msgs.msg import String
+from python_qt_binding.QtCore import QTimer
+from python_qt_binding.QtWidgets import QAction, QLabel, QLineEdit, QWidget
 import tf2_py as tf2
 import tf2_ros
 
-from geometry_msgs.msg import TransformStamped
 from tf import transformations
 
 
@@ -46,8 +44,8 @@ class TfEcho(Plugin):
                             help="Put plugin in silent mode")
         args, unknowns = parser.parse_known_args(context.argv())
         if not args.quiet:
-            print 'arguments: ', args
-            print 'unknowns: ', unknowns
+            print('arguments: ', args)
+            print('unknowns: ', unknowns)
 
         self.source_frame = ''
         self.target_frame = ''
